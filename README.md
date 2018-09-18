@@ -2,6 +2,8 @@
 
 samba 4 domain controller
 
+> **Note** : this is a not yet generalized version and requires token replacement ( ie. example.com, my.local, ip addresses ) so inspect carefully all files before execution
+
 ## prerequisites
 
 - [docker-ubuntu](https://github.com/devel0/docker-ubuntu)

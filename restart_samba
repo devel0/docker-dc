@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "killing winbindd"
+killall winbindd
+
+echo "killing nmbd"
+killall nmbd
+
+echo "killing smbd"
+killall smbd
+
+echo "restarting smbd, nmbd"
+/usr/sbin/samba -D
+#/etc/init.d/samba restart
+
+#winbindd &
+

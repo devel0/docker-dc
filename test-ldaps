@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ldapsearch -x -b "dc=my,dc=local" -D "CN=Administrator,CN=Users,DC=my,DC=local" -H ldaps://dc01.example.com:636 -y /security/dc01/Administrator
+# '(objectcategory=user)'

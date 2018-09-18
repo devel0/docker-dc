@@ -1,0 +1,3 @@
+#!/bin/bash
+
+host -t SRV _ldap._tcp.my.local.

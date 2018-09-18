@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" == "" ]; then
+	echo "specify user name"
+	exit 1
+fi
+
+ldapsearch -x -b "dc=my,dc=local" -D "CN=ldapquery,CN=Users,DC=my,DC=local" -H ldaps://dc01.example.com:636 -y /security/dc01/ldapquery "(samaccountname=$1)"

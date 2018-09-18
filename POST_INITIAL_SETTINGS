@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#set -x
+
+if [[ ! -e /.dockerenv || "$(hostname -s)" != "dc01" ]]; then
+	echo "requires to run inside docker"
+	exit 1
+fi
+
+echo "---> setup password min-max age"
+samba-tool domain passwordsettings set --min-pwd-age=0
+samba-tool domain passwordsettings set --max-pwd-age=90
+
+echo "---> create ldapquery user"
+samba-tool user create ldapquery "`cat /security/dc01/ldapquery`"
+
+echo "---> create organization unit SomeCity"
+ldbadd --url=/var/lib/samba/private/sam.ldb /dk/organization-unit.ldif
+
+# create user in OU SomeCity and add to Utenti group
+# args: username [args...]
+createuser()
+{
+	samba-tool user create "$1" \
+                --userou='OU=SomeCity' \
+                "${@:2}"
+	samba-tool group addmembers Utenti "$1"
+}
+
+# create user in OU SomeCity adding with given attributes, default password and add to Utenti group
+# args: username firstname surname email [args...]
+createuser2()
+{
+	createuser "$1" \
+		--given-name="$2" \
+		--surname="$3" \
+		--mail-address="$1@example.com" \
+		--company="Some company" \
+		"`cat /security/dc01/itadmin`" \
+		"${@:5}"
+}
+
+# args: groupname [args...]
+creategroup()
+{
+	samba-tool group add "$1" --groupou='OU=SomeCity' "${@:2}"
+}
+
+# args: groupname [members...]
+addmembers()
+{
+	samba-tool group addmembers "$1" "${@:2}"
+}
+
+echo "---> create group Utenti"
+creategroup Utenti --description="Utenti of SomeCity"
+
+echo "---> create itadmin user"
+createuser2 itadmin IT Admin "`cat /security/dc01/itadmin`"
+addmembers 'Domain Admins' itadmin
+
+echo "---> create localadmin user and Local Admins group"
+createuser localadmin "`cat /security/dc01/localadmin`"
+creategroup 'Local Admins' "--description='Local admin ( software install )'"
+addmembers 'Local Admins' localadmin
+
+for user in Administrator itadmin; do
+	echo "---> set no expiry for user [$user]"
+	samba-tool user setexpiry $user --noexpiry
+done
+
+echo "---> create SomeCity users"
+createuser2 loginname		FirstName	LastName
+
+#=================================
+
+creategroup Direction --description="Direction"
+addmembers Direzione loginname1
+
+creategroup Administration --description="Administration"
+addmembers Administration loginname2

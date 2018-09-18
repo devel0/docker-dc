@@ -1,0 +1,5 @@
+dn: OU=SomeCity,DC=my,DC=local
+changetype: add
+objectClass: top
+objectClass: organizationalunit
+description: HeadQuartier of SomeCity

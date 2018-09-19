@@ -1,4 +1,4 @@
-# docker-dotnet
+# docker-dc
 
 samba 4 domain controller
 

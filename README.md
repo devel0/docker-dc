@@ -5,7 +5,7 @@ samba 4 domain controller
 ## prerequisites
 
 - [docker-ubuntu](https://github.com/devel0/docker-ubuntu)
-- clear text user password ( must root owner and 600 mode )
+- clear text user password ( must root owner and 600 mode ; `/security/dc01` will mounted read-only into container )
   - `/security/dc01/ldapquery`
   - `/security/dc01/itadmin` [ Domain Admins ]
   - `/security/dc01/localadmin` [ Local Admins ]

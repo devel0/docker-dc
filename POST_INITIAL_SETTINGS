@@ -70,12 +70,12 @@ for user in Administrator itadmin; do
 done
 
 echo "---> create SomeCity users"
-createuser2 loginname		FirstName	LastName
+createuser2 loginname FirstName LastName
 
 #=================================
 
 creategroup Direction --description="Direction"
-addmembers Direzione loginname1
+addmembers Direction loginname1
 
 creategroup Administration --description="Administration"
 addmembers Administration loginname2

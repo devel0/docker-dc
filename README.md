@@ -13,7 +13,7 @@ samba 4 domain controller
 - `/scripts/constants` : `ip_dc01_srv` docker ip address variable
 - [letsencrypt](https://letsencrypt.org/) certificates
 - working [dns](https://github.com/devel0/docker-dns-rpz) that translates correctly `dc01.my.local` and `dc01.example.com` to dc01 ip docker container address
-- [firewall rules](https://github.com/devel0/linux-scripts-utils/blob/master/fw.sh) ( search for dc01 rules )
+- [firewall rules](https://github.com/devel0/linux-scripts-utils/blob/bf3f1a394cfdeb66439ee5f5a6e8a65c5422be91/fw.sh) ( search for dc01 rules )
 
 ## configure
 
